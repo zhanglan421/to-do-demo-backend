@@ -1,10 +1,30 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { TypeOrmModule } from '@nestjs/typeorm';
+
+import { User } from './core/entity/user.entity';
+
+import { CoreModule } from './core/core.module';
+import { TodoModule } from './todo/todo.module';
 
 @Module({
-  imports: [],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [
+    CoreModule, 
+    TodoModule,
+    TypeOrmModule.forRoot({
+      type: 'mssql',
+      host: '127.0.0.1',
+      port: 1433,
+      username: `admin`,
+      password: '123456',
+      database: 'nestDB',
+      synchronize: true,
+      extra: {
+        trustServerCertificate: true
+      },
+      entities: [User]
+    })
+  ],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}
