@@ -10,9 +10,10 @@ import { UserService } from './service/user.service';
 import { ValidationPipe } from './pipe/validate.pipe';
 
 import { User } from './entity/user.entity';
+import { Role } from './entity/role.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User])],
+  imports: [TypeOrmModule.forFeature([User, Role])],
   controllers: [CoreController],
   providers: [
     UserService,

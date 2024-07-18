@@ -1,4 +1,6 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+
+import { Role } from "./role.entity";
 
 @Entity()
 export class User {
@@ -8,6 +10,12 @@ export class User {
 
     @Column({ unique: true })
     userName: string;
+
+    @Column({ default: null })
+    userPassword: string;
+
+    @OneToMany(() => Role, role => role.roleName)
+    userRoles: string[];
 
     @Column({ default: false })
     locked: Boolean;

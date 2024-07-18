@@ -10,6 +10,6 @@ export class CoreController {
 
     @Post('createUser')
     createUser(@Body() userInfo: CreateUserDto) {
-        return this.userService.create();
+        return this.userService.create(userInfo);
     }
 }

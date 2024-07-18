@@ -6,6 +6,7 @@ import { User } from './core/entity/user.entity';
 
 import { CoreModule } from './core/core.module';
 import { TodoModule } from './todo/todo.module';
+import { Role } from './core/entity/role.entity';
 
 @Module({
   imports: [
@@ -38,7 +39,7 @@ import { TodoModule } from './todo/todo.module';
               },
             },
           },
-          entities: [User]
+          entities: [User, Role]
         }
       }
     })
