@@ -7,12 +7,14 @@ import { User } from './core/entity/user.entity';
 import { CoreModule } from './core/core.module';
 import { TodoModule } from './todo/todo.module';
 import { Role } from './core/entity/role.entity';
+import { UploadModule } from './upload/upload.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
     CoreModule, 
     TodoModule,
+    UploadModule,
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
@@ -42,7 +44,7 @@ import { Role } from './core/entity/role.entity';
           entities: [User, Role]
         }
       }
-    })
+    }),
   ],
   controllers: [],
   providers: [],

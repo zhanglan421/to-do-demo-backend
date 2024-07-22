@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
@@ -16,6 +16,10 @@ export class UserService {
 
   async create(userInfo: CreateUserDto) {
 
+    const isExistedUser = await this.findUserExists(userInfo.userName);
+
+    if (isExistedUser) { return new HttpException('用户名已经存在', 400)}
+
     const user: User = new User();
 
     let roleString = (userInfo.userRoles as any).replace(/'/g, '"');
@@ -29,24 +33,17 @@ export class UserService {
     })
 
     userInfo.userRoles = roles;
-
+    
     const savedUser = this.userRepository.merge(user, { ...userInfo });
 
-    const existedUser = await this.userRepository.find({
-      where: {
-        userName: userInfo.userName,
-      },
-      relations: {
-        userRoles: true,
-      }
-    });
 
-    console.log(existedUser)
-
-
-    return existedUser;
+    // return existedUser;
     // const saved = await this.userRepository.save(savedUser);
 
     // console.log(saved)
+  }
+
+  async findUserExists (userName: string)  {
+    return await this.userRepository.existsBy({ userName });
   }
 }

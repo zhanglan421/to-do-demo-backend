@@ -11,7 +11,7 @@ export class CoreController {
 
     @Post('createUser')
     @UseInterceptors(NoFilesInterceptor())
-    createUser(@Body() userInfo: any) {
+    createUser(@Body() userInfo: CreateUserDto) {
         // console.log('userInfo', userInfo)
         
         return this.userService.create(userInfo);

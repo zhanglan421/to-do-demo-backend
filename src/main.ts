@@ -10,11 +10,13 @@ async function bootstrap() {
     .setTitle('toDo example')
     .setDescription('The toDo API description')
     .setVersion('1.0')
-    .addTag('toDo')
+    .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, config);
 
-  SwaggerModule.setup('api', app, document);
+  SwaggerModule.setup('api', app, document, { jsonDocumentUrl: 'swagger/json' });
+
+  app.enableCors();
 
   await app.listen(3000);
 }
