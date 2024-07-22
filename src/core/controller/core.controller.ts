@@ -1,4 +1,5 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Post, Req, UseInterceptors } from '@nestjs/common';
+import { NoFilesInterceptor } from '@nestjs/platform-express';
 
 import { UserService } from '../service/user.service';
 
@@ -9,7 +10,10 @@ export class CoreController {
     constructor(private userService: UserService) {}
 
     @Post('createUser')
-    createUser(@Body() userInfo: CreateUserDto) {
+    @UseInterceptors(NoFilesInterceptor())
+    createUser(@Body() userInfo: any) {
+        // console.log('userInfo', userInfo)
+        
         return this.userService.create(userInfo);
     }
 }

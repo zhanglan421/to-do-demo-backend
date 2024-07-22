@@ -1,13 +1,20 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
-import { User } from "./user.entity";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { User } from './user.entity';
 
-enum roleEnum { admin, user, guest }
+export enum roleEnum {
+  ADMIN = 'admin',
+  USER = 'user',
+  GUEST = 'guest',
+}
 
 @Entity()
-export class Role{
+export class Role {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => User, user => user.userRoles)
+  @Column()
   roleName: roleEnum;
+
+  @ManyToOne(() => User, (user) => user.userRoles)
+  user: User;
 }
